@@ -68,6 +68,7 @@ jobmatch-intel/
 │   │   │   ├── routes/            # API endpoints
 │   │   │   ├── models/            # Pydantic DTOs
 │   │   │   └── services/          # Business logic
+│   │   │       └── providers/          # Define supported AI engine models.
 │   │   ├── Dockerfile
 │   │   └── requirements.txt
 │   └── n8n/
