@@ -1,0 +1,58 @@
+{
+  "name": "Job Matching - MVP",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "68660625-a445-4c77-ba33-917829f570f1",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://matching-api:8000/api/v1/match",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"job\": {\n    \"title\": \"Backend Developer\",\n    \"company\": \"Empresa Teste\",\n    \"description\": \"Vaga para desenvolvedor backend com foco em Python e APIs REST.\",\n    \"required_skills\": [\"Python\", \"FastAPI\", \"PostgreSQL\", \"Docker\"],\n    \"experience_level\": \"Pleno\",\n    \"location\": \"São Paulo\",\n    \"work_model\": \"hybrid\"\n  },\n  \"resume\": \"Desenvolvedor backend com 3 anos de experiência em Python, FastAPI, PostgreSQL e Docker.\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "dd4c3e00-2c70-4193-aa32-bc8816906269",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "59ce3947-7993-4cf3-a58e-6b22046d0c70",
+  "meta": {
+    "instanceId": "736d586b5841593bade1d0a7e9e674bf53029ddd1c6a6c58d1104f9e81999e96"
+  },
+  "id": "rjzcHYFaTrXu6FTT",
+  "tags": []
+}
