@@ -7,10 +7,37 @@
       "typeVersion": 1,
       "position": [
         0,
-        0
+        16
       ],
       "id": "68660625-a445-4c77-ba33-917829f570f1",
       "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "http://job-fetcher:8001/api/v1/jobs",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "title",
+              "value": "Desenvolvedor Backend"
+            },
+            {
+              "name": "location",
+              "value": "Brasil"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        272,
+        16
+      ],
+      "id": "b94a499d-f4ad-49f7-964a-61642c154fee",
+      "name": "job-fetcher"
     },
     {
       "parameters": {
@@ -18,17 +45,31 @@
         "url": "http://matching-api:8000/api/v1/match",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "{\n  \"job\": {\n    \"title\": \"Backend Developer\",\n    \"company\": \"Empresa Teste\",\n    \"description\": \"Vaga para desenvolvedor backend com foco em Python e APIs REST.\",\n    \"required_skills\": [\"Python\", \"FastAPI\", \"PostgreSQL\", \"Docker\"],\n    \"experience_level\": \"Pleno\",\n    \"location\": \"São Paulo\",\n    \"work_model\": \"hybrid\"\n  },\n  \"resume\": \"Desenvolvedor backend com 3 anos de experiência em Python, FastAPI, PostgreSQL e Docker.\"\n}",
+        "jsonBody": "{\n  \"job\": {\n    \"title\": \"{{ $json.title }}\",\n    \"company\": \"{{ $json.company }}\",\n    \"description\": \"{{ $json.description }}\",\n    \"required_skills\": [],\n    \"experience_level\": \"Não especificado\",\n    \"location\": \"{{ $json.location }}\",\n    \"work_model\": \"Não especificado\"\n  },\n  \"resume\": \"Desenvolvedor backend com 3 anos de experiência em Python, FastAPI, PostgreSQL e Docker. Experiência com automação e APIs REST.\"\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        208,
-        0
+        544,
+        16
       ],
       "id": "dd4c3e00-2c70-4193-aa32-bc8816906269",
-      "name": "HTTP Request"
+      "name": "matching-api"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        416,
+        -176
+      ],
+      "id": "d3007f1b-eec7-4062-9f0d-41f0349d4c3f",
+      "name": "Split Out"
     }
   ],
   "pinData": {},
@@ -37,7 +78,23 @@
       "main": [
         [
           {
-            "node": "HTTP Request",
+            "node": "job-fetcher",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "matching-api": {
+      "main": [
+        []
+      ]
+    },
+    "job-fetcher": {
+      "main": [
+        [
+          {
+            "node": "matching-api",
             "type": "main",
             "index": 0
           }
@@ -49,7 +106,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "59ce3947-7993-4cf3-a58e-6b22046d0c70",
+  "versionId": "196639d4-2b74-4418-a61a-c41b0a6aab0e",
   "meta": {
     "instanceId": "736d586b5841593bade1d0a7e9e674bf53029ddd1c6a6c58d1104f9e81999e96"
   },
